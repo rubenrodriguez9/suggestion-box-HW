@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const suggestionRoutes = require('./routes/suggestionRoutes')
 
-mongoose.connect('mongodb:localhost/suggestions',{
+mongoose.connect('mongodb://localhost/suggestions',{
 
     useNewUrlParser: true,
     useUnifiedTopology: true,
