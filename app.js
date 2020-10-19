@@ -4,12 +4,25 @@ const morgan = require('morgan');
 const path = require('path');
 const app = express();
 
-require('dotenv').config()
+require('dotenv').config();
+
+const suggestionRoutes = require('./routes/suggestionRoutes')
+
+mongoose.connect('mongodb:localhost/suggestions',{
+
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
 
 
-const port = process.env.PORT || 3000
+})
+    .then(() => console.log("MongoDB Connected"))
+    .catch((err) => `${err}`)
 
-app.use(morgan('dev'))
+const port = process.env.PORT || 3000;
+
+app.use(morgan('dev'));
 
 
 app.use(express.json());
@@ -17,10 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 
 
 
-app.use('/', (req,res) => {
-    res.status(200).send('server is running')
-})
+app.use('/api/v1/suggestions', suggestionRoutes);
 
 app.listen(port, () =>{
-    console.log(`Listening on port ${port}`)
-})
+    console.log(`Listening on port ${port}`);
+});
